@@ -1,20 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function Categories({ items, onClick }) {
-
-  const [activeItem, setActiveItem] = React.useState(null)
-
+const Categories = React.memo(function Categories({ activeCategory, items, onClickCategory }) {
   return (
       <div className="categories">
             <ul>
               <li 
-                onClick={() => setActiveItem(null)} 
-                className={activeItem === null ? "active" : ""}
+                onClick={() => onClickCategory(null)} 
+                className={activeCategory === null ? "active" : ""}
               >Все</li>
               {items && items.map((name, id) => (
               <li 
-                className={activeItem === id ? "active" : ""}
-                onClick={() => setActiveItem(id)} 
+                className={activeCategory === id ? "active" : ""}
+                onClick={() => onClickCategory(id)} 
                 key={`${name}_${id}`}>
                 {name}
                 </li>
@@ -22,36 +20,17 @@ function Categories({ items, onClick }) {
               )}
               
             </ul>
-          </div>
+        </div>
   );
-}
+})
 
-// class Categories extends React.Component {
-  
-//   state = {
-//     activeItem: null
-//   }
+Categories.propTypes = {
+  // activeCategory: PropTypes.oneOf([PropTypes.number, null]),
+  items: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onClickCategory: PropTypes.func.isRequired,
+};
 
-//   render() {
-//     const { items, onClick } = this.props;
-//     return (
-//       <div className="categories">
-//             <ul>
-//               <li className="active">Все</li>
-//               {items.map((name, id) => (
-//               <li
-//                 className={this.state.activeItem === id ? "active" : ""}
-//                 onClick={() => this.setState({activeItem: id})} 
-//                 key={`${name}_${id}`}>
-//                 {name}
-//               </li>)
-//               )}
-              
-//             </ul>
-//           </div>
-//   );
-//   }
-// }
+Categories.defaultProps = { activeCategory: null, items: [] };
 
 export default Categories;
 
