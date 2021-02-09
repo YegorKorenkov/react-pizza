@@ -2,11 +2,13 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-function Button ({ className, outline, children }) {
+function Button ({ className, outline, children, onClick }) {
     return (
-        <button className={classNames('button', className, {
-            'button--outline': outline
-        })}>{children}
+        <button 
+            onClick={onClick}
+            className={classNames('button', className, {
+                'button--outline': outline
+            })}>{children}
         
         </button>
         
